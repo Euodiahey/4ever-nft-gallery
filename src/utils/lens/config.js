@@ -1,54 +1,21 @@
-import fs from 'fs'
-import path from 'path'
+export const PK = '5d3fce9e74d6c67753a82ac349dd8ede342ce2585b5dd18b22b062cd120e493a'
 
-const fileLensHub = fs.readFileSync(path.join(__dirname, 'abis/lens-hub-contract-abi.json'), 'utf8')
-const fileLensPeriphery = fs.readFileSync(
-  path.join(__dirname, 'abis/lens-periphery-data-provider.json'),
-  'utf8'
-)
-const fileFollowNFT = fs.readFileSync(
-  path.join(__dirname, 'abis/lens-follow-nft-contract-abi.json'),
-  'utf8'
-)
+export const MUMBAI_RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
 
-const getParamOrExit = (name) => {
-  const param = process.env[name]
-  if (!param) {
-    console.error(`Required config param '${name}' missing`)
-    process.exit(1)
-  }
-  return param
-}
+export const LENS_API = 'https://api-mumbai.lens.dev/'
 
-const getParam = (name) => {
-  const param = process.env[name]
-  if (!param) {
-    return null
-  }
-  return param
-}
+export const LENS_HUB_CONTRACT = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82'
 
-export const explicitStart = (filename) => {
-  const scriptName = path.basename(process.argv[1])
-  return path.basename(filename).includes(scriptName)
-}
-
-export const PK = getParamOrExit('PK')
-
-export const MUMBAI_RPC_URL = getParamOrExit('MUMBAI_RPC_URL')
-
-export const LENS_API = getParamOrExit('LENS_API')
-
-export const LENS_HUB_CONTRACT = getParamOrExit('LENS_HUB_CONTRACT')
-
-export const LENS_PERIPHERY_CONTRACT = getParamOrExit('LENS_PERIPHERY_CONTRACT')
+export const LENS_PERIPHERY_CONTRACT = '0xD5037d72877808cdE7F669563e9389930AF404E8'
 
 export const LENS_PERIPHERY_NAME = 'LensPeriphery'
 
-export const PROFILE_ID = getParam('PROFILE_ID')
+export const PROFILE_ID = '0x8eb7'
 
-export const LENS_FOLLOW_NFT_ABI = JSON.parse(fileFollowNFT)
+import LENS_FOLLOW_NFT_ABI from './abis/lens-follow-nft-contract-abi.json'
 
-export const LENS_HUB_ABI = JSON.parse(fileLensHub)
+import LENS_HUB_ABI from './abis/lens-hub-contract-abi.json'
 
-export const LENS_PERIPHERY_ABI = JSON.parse(fileLensPeriphery)
+import LENS_PERIPHERY_ABI from './abis/lens-periphery-data-provider.json'
+
+export { LENS_FOLLOW_NFT_ABI, LENS_HUB_ABI, LENS_PERIPHERY_ABI }

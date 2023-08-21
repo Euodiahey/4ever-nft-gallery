@@ -1,18 +1,19 @@
 import { ethers, utils, Wallet } from 'ethers'
-// import { MUMBAI_RPC_URL, PK } from './config'
+import { MUMBAI_RPC_URL, PK } from './config'
 import omitDeep from 'omit-deep'
 
 export const omit = (object, name) => {
   return omitDeep(object, name)
 }
 
-// export const ethersProvider = new ethers.providers.JsonRpcProvider(MUMBAI_RPC_URL)
+export const ethersProvider = new ethers.providers.JsonRpcProvider(MUMBAI_RPC_URL)
 
 export const getProvider = () => {
   return new ethers.providers.Web3Provider(window.ethereum)
 }
 
 export const getSigner = () => {
+  // if (typeof window == 'undefined')
   // return new Wallet(PK, ethersProvider)
   return getProvider().getSigner()
 }
