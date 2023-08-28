@@ -1,9 +1,18 @@
-import ElRow from './el-row.vue'
-import ElCol from './el-col.vue'
+const files = import.meta.globEager('/src/components/*/*.vue')
 
 export default {
   install(app) {
-    app.component('el-row', ElRow)
-    app.component('el-col', ElCol)
+    const list = Object.keys(files)
+    list.forEach((filePath) => {
+      const component = files[filePath].default
+      let { name } = component
+      if (!name) {
+        name = filePath
+          .replace(/\/index.vue$/, '')
+          .replace(/^.*\//, '')
+          .replace('.vue', '')
+      }
+      app.component(name, component)
+    })
   }
 }

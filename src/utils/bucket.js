@@ -1,6 +1,6 @@
 // const axios = require("axios");
-const { S3 } = require('@aws-sdk/client-s3')
-const { Upload } = require('@aws-sdk/lib-storage')
+import { S3 } from '@aws-sdk/client-s3'
+import { Upload } from '@aws-sdk/lib-storage'
 
 const bucket = {
   client: null,
@@ -57,6 +57,6 @@ const bucket = {
   }
 }
 
-module.exports = bucket
+export default bucket
 
 // bucket.listBuckets();
