@@ -3,7 +3,7 @@ const routes = [
     path: '/',
     component: () => import('../layouts/main-layout.vue'),
     children: [
-      { path: '', component: () => import('./IndexPage.vue') },
+      { path: '', component: () => import('./home-page.vue') },
       {
         path: '/drive/:catchAll(.*)*',
         component: () => import('./drive/page-drive.vue'),

@@ -1,6 +1,6 @@
 <script setup>
-import UploadAct from "./qs-upload-act.vue";
-import TableList from "./table-list.vue";
+import UploadAct from './qs-upload-act.vue'
+import TableList from './table-list.vue'
 </script>
 
 <template>
@@ -26,16 +26,21 @@ export default {
   computed: {},
   // activated() {},
   updated() {
-    console.log("updated", this.$route.path);
+    console.log('updated', this.$route.path)
   },
   created() {
-    console.log("created");
-    console.log(this.$bucket);
+    console.log('created')
+    if (localStorage.testKey) {
+      this.$bucket.setClient(localStorage.testKey, localStorage.testSecret)
+      this.$bucket.listBuckets().then((res) => {
+        console.log(res)
+      })
+    }
   },
   methods: {
     onUpload(e) {
-      console.log(e);
-    },
-  },
-};
+      console.log(e)
+    }
+  }
+}
 </script>
