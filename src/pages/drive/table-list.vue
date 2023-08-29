@@ -1,6 +1,7 @@
 <template>
   <div class="">
     <q-table
+      :loading="loading"
       flat
       tabindex="0"
       :rows="rows"
@@ -10,6 +11,7 @@
       v-model:selected="selected"
       v-model:pagination="pagination"
       :filter="filter"
+      @row-click="onRow"
     >
       <!-- <template v-slot:top-right>
         <q-input
@@ -25,49 +27,56 @@
         </q-input>
       </template> -->
     </q-table>
+    <q-drawer show-if-above v-model="showPop" side="right" bordered>
+      <div>File Info</div>
+    </q-drawer>
   </div>
 </template>
 
 <script>
-const columns = [
-  {
-    name: "desc",
-    required: true,
-    label: "File Name",
-    align: "left",
-    field: (row) => row.name,
-    format: (val) => `${val}`,
-    sortable: true,
-  },
-  {
-    name: "updateAt",
-    align: "left",
-    label: "Update Time",
-    field: "updateAt",
-    sortable: true,
-  },
-  { name: "size", label: "Size", field: "size" },
-];
-
-const rows = [
-  {
-    id: 1,
-    name: "Frozen Yogurt",
-    updateAt: "2022-8-22",
-    size: "100mb",
-  },
-];
-
 export default {
+  props: {
+    rows: Array,
+    loading: Boolean
+  },
   data() {
     return {
-      filter: "",
+      filter: '',
       selected: [],
-      pagination: {},
-
-      columns,
-      rows,
-    };
+      pagination: {
+        rowsPerPage: 30
+      },
+      columns: [
+        {
+          name: 'Key',
+          required: true,
+          label: 'Name',
+          align: 'left',
+          field: 'name',
+          // field: (row) => row.name,
+          // format: (val) => `${val}`,
+          sortable: true
+        },
+        {
+          name: 'updateAt',
+          align: 'left',
+          label: 'Update Time',
+          field: 'updatedAt',
+          sortable: true
+        },
+        { name: 'size', label: 'Size', field: 'sizeUnit' }
+      ],
+      showPop: false
+    }
   },
-};
+  methods: {
+    onRow(_, row) {
+      if (row.prefix) {
+        this.$router.push(this.$route.path + '/' + row.name)
+        return
+      }
+      this.showPop = true
+    }
+  }
+}
 </script>

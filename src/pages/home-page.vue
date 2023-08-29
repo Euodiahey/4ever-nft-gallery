@@ -4,9 +4,3 @@
   </q-page>
 </template>
 
-<script>
-export default {
-  created() {
-    //
-  }
-}

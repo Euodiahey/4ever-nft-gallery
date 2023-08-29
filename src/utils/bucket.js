@@ -1,6 +1,7 @@
 // const axios = require("axios");
 import { S3 } from '@aws-sdk/client-s3'
 import { Upload } from '@aws-sdk/lib-storage'
+import { getFileSize } from './helper'
 
 const bucket = {
   client: null,
@@ -46,14 +47,35 @@ const bucket = {
     // console.log(res.Buckets); // [{Name, CreationDate}]
     return res.Buckets
   },
-  async listObjects(params) {
-    const res = await this.client.listObjectsV2({
-      Delimiter: '/',
-      MaxKeys: 30,
-      ...params
+  createBucket(Bucket) {
+    return this.client.createBucket({
+      Bucket
     })
-    // console.log(res);
-    return res
+  },
+  listObjects(params) {
+    return this.client
+      .listObjectsV2({
+        Delimiter: '/',
+        MaxKeys: 30,
+        ...params
+      })
+      .then((res) => {
+        return {
+          rows: [
+            ...(res.CommonPrefixes || []).map((it) => ({
+              name: it.Prefix.replace(params.Prefix, '').replace('/', ''),
+              prefix: true
+            })),
+            ...(res.Contents || []).map((it) => ({
+              name: it.Key.replace(params.Prefix, ''),
+              size: it.Size,
+              sizeUnit: getFileSize(it.Size),
+              updatedAt: it.LastModified.format()
+            }))
+          ]
+        }
+        //
+      })
   }
 }
 
