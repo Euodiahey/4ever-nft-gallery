@@ -1,6 +1,7 @@
 <script setup>
 import UploadAct from './qs-upload-act.vue'
 import TableList from './table-list.vue'
+import FilePreview from './qs-preview.vue'
 </script>
 
 <template>
@@ -15,9 +16,14 @@ import TableList from './table-list.vue'
       </q-breadcrumbs>
     </div>
     <div class="q-mt-md">
-      <table-list :rows="objList" :loading="objLoading" />
+      <table-list :rows="objList" :loading="objLoading" @row-click="onRow" />
     </div>
   </div>
+  <q-dialog v-model="showPreview">
+    <q-card class="full-width" style="max-width: 600px">
+      <file-preview></file-preview>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -26,7 +32,8 @@ export default {
     return {
       bucketName: null,
       objList: [],
-      objLoading: false
+      objLoading: false,
+      showPreview: false
     }
   },
   computed: {
@@ -60,6 +67,9 @@ export default {
     }
   },
   methods: {
+    onRow() {
+      this.showPreview = true
+    },
     onUpload(e) {
       console.log(e)
     },

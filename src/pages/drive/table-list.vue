@@ -62,6 +62,7 @@
 
 <script>
 export default {
+  emits: ['row-click'],
   props: {
     rows: Array,
     loading: Boolean
@@ -121,13 +122,17 @@ export default {
         color
       }
     },
-    onRow(row, idx) {
+    onRow(row, index) {
       if (row.prefix) {
         this.$router.push(this.$route.path + '/' + row.name)
         return
       }
       this.showPop = true
       // this.activeIdx = this.activeIdx == idx ? -1 : idx
+      this.$emit('row-click', {
+        row,
+        index
+      })
     }
   }
 }
