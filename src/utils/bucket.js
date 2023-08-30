@@ -67,10 +67,12 @@ const bucket = {
               prefix: true
             })),
             ...(res.Contents || []).map((it) => ({
+              key: it.Key,
               name: it.Key.replace(params.Prefix, ''),
               size: it.Size,
               sizeUnit: getFileSize(it.Size),
-              updatedAt: it.LastModified.format()
+              lastModified: it.LastModified,
+              updatedAt: it.LastModified.format('date')
             }))
           ]
         }
