@@ -3,24 +3,53 @@
   <q-carousel
     swipeable
     animated
+    transition-prev="slide-right"
+    transition-next="slide-left"
     arrows
     v-model="slide"
     v-model:fullscreen="fullscreen"
-    navigation
     infinite
-    height="70vh"
+    height="80vh"
   >
-    <q-carousel-slide name="style" class="column no-wrap flex-center bg-black white">
-      <q-icon name="style" size="56px" />
-      <div class="q-mt-md text-center">
-        {{ lorem }}
-      </div>
+    <q-carousel-slide name="0" class="column no-wrap flex-center bg-80">
+      <iframe
+        class="wh100p"
+        src="https://501351981.github.io/vue-office/examples/dist/#/docx"
+        frameborder="0"
+      ></iframe>
+      <!-- <q-scroll-area class="fit">
+        <div class="q-pa-lg">
+          <p v-for="i in 30" :key="i">{{ i }}</p>
+        </div>
+      </q-scroll-area> -->
     </q-carousel-slide>
     <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
     <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
-    <q-carousel-slide :name="3" img-src="https://cdn.quasar.dev/img/parallax2.jpg" />
-    <q-carousel-slide :name="4" img-src="https://cdn.quasar.dev/img/quasar.jpg" />
+    <q-carousel-slide :name="3" class="column no-wrap flex-center bg-80">
+      <iframe
+        class="wh100p"
+        src="/preview/code.html?url=https://4ever-web.4everland.store/github/markmap.html"
+        frameborder="0"
+      ></iframe>
+    </q-carousel-slide>
+    <q-carousel-slide :name="4" class="column no-wrap flex-center bg-80">
+      <iframe
+        class="wh100p"
+        src="/preview/code.html?url=https://memory.4everland.store/bin/bucket.js"
+        frameborder="0"
+      ></iframe>
+    </q-carousel-slide>
+    <q-carousel-slide :name="5" class="column no-wrap flex-center bg-80">
+      <iframe
+        class="wh100p"
+        src="/preview/code.html?url=https://memory.4everland.store/card.json"
+        frameborder="0"
+      ></iframe>
+    </q-carousel-slide>
     <template v-slot:control>
+      <q-carousel-control position="bottom-left" :offset="[18, 18]">
+        <div class="pa-2 bg-black-3 white">{{ slide }}/{{ 5 }}</div>
+      </q-carousel-control>
       <q-carousel-control position="bottom-right" :offset="[18, 18]">
         <q-btn
           push

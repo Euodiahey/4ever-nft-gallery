@@ -19,8 +19,8 @@ import FilePreview from './qs-preview.vue'
       <table-list :rows="objList" :loading="objLoading" @row-click="onRow" />
     </div>
   </div>
-  <q-dialog v-model="showPreview">
-    <q-card class="full-width" style="max-width: 600px">
+  <q-dialog v-model="showPreview" transition-show="slide-up" transition-hide="jump-up">
+    <q-card class="full-width" style="max-width: 900px">
       <file-preview></file-preview>
     </q-card>
   </q-dialog>

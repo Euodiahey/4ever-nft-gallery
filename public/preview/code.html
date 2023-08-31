@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <style>
+    body {
+      margin: 20px;
+      background: #808080;
+    }
+
+    pre {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #f3f3f3;
+      box-shadow: 0 3px 10px #666;
+      min-height: 95vh;
+      min-height: calc(100vh - 40px);
+    }
+
+    #msg_wrap {
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function getParams(url) {
+      if (!url) url = location.href;
+      let query = url.split("?")[1] || "";
+      let arr = query.split("&");
+      let obj = {};
+      arr.forEach((str) => {
+        let [k, v] = str.split("=");
+        if (!k) return;
+        obj[k] = decodeURIComponent(v);
+      });
+      return obj;
+    }
+    var params = getParams()
+  </script>
+</head>
+
+<body>
+  <main>
+    <div id="msg_wrap">
+      <span id="msg" style="color: #666">...</span>
+    </div>
+    <pre>
+      <code id="code"></code>
+    </pre>
+  </main>
+  <script>
+    var elCode = document.querySelector('#code')
+
+    function setMsg(msg) {
+      if (!msg) {
+        document.querySelector('#msg_wrap').style.display = 'none'
+      } else {
+        document.querySelector('#msg').innerText = msg
+      }
+    }
+
+    function getCode(url) {
+      fetch(url)
+        .then(res => res.text())
+        .then(data => {
+          console.log(data)
+          elCode.innerText = data
+          // elCode.innerHTML = data
+          setMsg(null)
+          // hljs.highlightAll();
+        })
+        .catch(error => {
+          setMsg(error.message)
+        })
+    }
+    if (!params.url) {
+      setMsg('Missing parameter: url')
+    } else {
+      setMsg('Loading')
+      getCode(params.url)
+    }
+  </script>
+</body>
+
+</html>
