@@ -14,7 +14,7 @@
     <q-carousel-slide name="0" class="column no-wrap flex-center bg-80">
       <iframe
         class="wh100p"
-        src="https://501351981.github.io/vue-office/examples/dist/#/docx"
+        src="http://127.0.0.1:5174/pdf?src=https://qs3.4everland.store/test2.pdf"
         frameborder="0"
       ></iframe>
       <!-- <q-scroll-area class="fit">
@@ -24,25 +24,24 @@
       </q-scroll-area> -->
     </q-carousel-slide>
     <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" />
-    <q-carousel-slide :name="2" img-src="https://cdn.quasar.dev/img/parallax1.jpg" />
+    <q-carousel-slide :name="2" class="column no-wrap flex-center bg-80">
+      <iframe
+        class="wh100p"
+        src="/preview/code.html?src=https://4ever-web.4everland.store/github/markmap.html"
+        frameborder="0"
+      ></iframe>
+    </q-carousel-slide>
     <q-carousel-slide :name="3" class="column no-wrap flex-center bg-80">
       <iframe
         class="wh100p"
-        src="/preview/code.html?url=https://4ever-web.4everland.store/github/markmap.html"
+        src="/preview/code.html?src=https://memory.4everland.store/bin/bucket.js"
         frameborder="0"
       ></iframe>
     </q-carousel-slide>
     <q-carousel-slide :name="4" class="column no-wrap flex-center bg-80">
       <iframe
         class="wh100p"
-        src="/preview/code.html?url=https://memory.4everland.store/bin/bucket.js"
-        frameborder="0"
-      ></iframe>
-    </q-carousel-slide>
-    <q-carousel-slide :name="5" class="column no-wrap flex-center bg-80">
-      <iframe
-        class="wh100p"
-        src="/preview/code.html?url=https://memory.4everland.store/card.json"
+        src="/preview/code.html?src=https://memory.4everland.store/card.json"
         frameborder="0"
       ></iframe>
     </q-carousel-slide>

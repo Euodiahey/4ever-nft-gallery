@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
   <style>
     body {
-      margin: 15px;
+      margin: 20px;
       background: #808080;
     }
 
@@ -31,10 +31,14 @@
     main {
       max-width: 900px;
       margin: 0 auto;
-      background: #f3f3f3;
-      box-shadow: 0 3px 10px #666;
+      box-shadow: 0 0 10px #666;
       min-height: 95vh;
       min-height: calc(100vh - 30px);
+    }
+
+    .hljs,
+    main {
+      background: #fff;
     }
 
     #msg_wrap {
@@ -94,11 +98,11 @@
           setMsg(error.message)
         })
     }
-    if (!params.url) {
-      setMsg('Missing parameter: url')
+    if (!params.src) {
+      setMsg('Missing query.src')
     } else {
-      setMsg(params.url)
-      getCode(params.url)
+      setMsg(params.src)
+      getCode(params.src)
     }
   </script>
 </body>
