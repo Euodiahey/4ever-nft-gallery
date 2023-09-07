@@ -10,7 +10,6 @@ export default {
   name: 'App',
   setup() {
     const $q = useQuasar()
-    console.log($q)
     window.$notify = (message, position = 'top') => {
       $q.notify({
         message,

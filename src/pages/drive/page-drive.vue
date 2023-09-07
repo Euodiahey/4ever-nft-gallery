@@ -21,7 +21,7 @@ import FilePreview from './qs-preview.vue'
   </div>
   <q-dialog v-model="showPreview" transition-show="slide-up" transition-hide="jump-up">
     <q-card class="full-width" style="max-width: 900px">
-      <file-preview></file-preview>
+      <file-preview :list="fileList" :current="fileIdx"></file-preview>
     </q-card>
   </q-dialog>
 </template>
@@ -33,7 +33,8 @@ export default {
       bucketName: null,
       objList: [],
       objLoading: false,
-      showPreview: false
+      showPreview: false,
+      fileIdx: -1,
     }
   },
   computed: {
@@ -49,10 +50,13 @@ export default {
         console.log(to)
         return {
           label: seg,
-          to
+          to,
         }
       })
-    }
+    },
+    fileList() {
+      return this.objList.filter((it) => !it.prefix)
+    },
   },
   // activated() {},
   updated() {
@@ -64,11 +68,13 @@ export default {
   watch: {
     path() {
       if (this.$bucket.client) this.getList()
-    }
+    },
   },
   methods: {
-    onRow() {
+    onRow({ row }) {
+      this.fileIdx = this.fileList.findIndex((it) => it.url == row.url)
       this.showPreview = true
+      console.log(this.fileIdx)
     },
     onUpload(e) {
       console.log(e)
@@ -95,7 +101,7 @@ export default {
         this.objLoading = true
         const data = await this.$bucket.listObjects({
           Bucket: this.bucketName,
-          Prefix
+          Prefix,
         })
         this.objList = data.rows
       } catch (error) {
@@ -108,7 +114,7 @@ export default {
       if (!list.find((it) => it.Name == this.bucketName)) {
         await this.$bucket.createBucket(this.bucketName)
       }
-    }
-  }
+    },
+  },
 }
 </script>

@@ -67,6 +67,7 @@ const bucket = {
               prefix: true
             })),
             ...(res.Contents || []).map((it) => ({
+              url: `https://${params.Bucket}.4everland.store/${it.Key}`,
               key: it.Key,
               name: it.Key.replace(params.Prefix, ''),
               size: it.Size,
