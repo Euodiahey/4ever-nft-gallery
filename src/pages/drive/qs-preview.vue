@@ -91,7 +91,7 @@ export default {
     },
     getUrl(it) {
       let pre = 'http://127.0.0.1:5174/'
-      pre = 'https://vue-preview.4everland.app/'
+      pre = 'https://preview.4everland.org/'
       let url = pre + '?src=' + it.url
       if (it.size > 1024 * 100) {
         if (/\.(js|json|txt|html)$/.test(it.name)) {
