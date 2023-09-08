@@ -21,6 +21,9 @@ import FilePreview from './qs-preview.vue'
   </div>
   <q-dialog v-model="showPreview" transition-show="slide-up" transition-hide="jump-up">
     <q-card class="full-width" style="max-width: 900px">
+      <q-card-section class="pos-a right-0 top-0 z-100">
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
       <file-preview :list="fileList" :current="fileIdx"></file-preview>
     </q-card>
   </q-dialog>
@@ -54,6 +57,11 @@ export default {
         }
       })
     },
+    bucketPrefix() {
+      let prefix = this.path.split('/').slice(2).join('/')
+      if (prefix) prefix += '/'
+      return prefix
+    },
     fileList() {
       return this.objList.filter((it) => !it.prefix)
     },
@@ -81,9 +89,13 @@ export default {
     },
     async initBucket() {
       try {
+        const testKey = this.$route.query.testKey
+        if (testKey) {
+          localStorage.testKey = testKey
+        }
         if (localStorage.testKey) {
-          this.$bucket.setClient(localStorage.testKey, localStorage.testSecret)
-          this.bucketName = '4ever-web'
+          this.$bucket.setClient(localStorage.testKey, 'ZraPQHA7T6y0Ut3+Dd3eV5yDxE3hC2bvRFgcLYIE')
+          this.bucketName = 'qs3'
           this.objLoading = true
           await this.checkBucket()
           await this.getList()
@@ -96,12 +108,10 @@ export default {
     },
     async getList() {
       try {
-        let Prefix = this.path.split('/').slice(2).join('/')
-        if (Prefix) Prefix += '/'
         this.objLoading = true
         const data = await this.$bucket.listObjects({
           Bucket: this.bucketName,
-          Prefix,
+          Prefix: this.bucketPrefix,
         })
         this.objList = data.rows
       } catch (error) {

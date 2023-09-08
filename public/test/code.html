@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script> -->
+  <style>
+    body {
+      margin: 20px;
+      background: #808080;
+    }
+
+    pre {
+      margin: 0;
+      font-size: 14px;
+      tab-size: 4;
+      line-height: 1.2;
+    }
+
+    pre.break_word {
+      white-space: pre-wrap;
+      tab-size: 2;
+    }
+
+    pre.break_word code {
+      word-wrap: break-word;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px #666;
+      min-height: 95vh;
+      min-height: calc(100vh - 30px);
+    }
+
+    .hljs,
+    main {
+      background: #fff;
+    }
+
+    #msg_wrap {
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+  <script>
+    function getParams(url) {
+      if (!url) url = location.href;
+      let query = url.split("?")[1] || "";
+      let arr = query.split("&");
+      let obj = {};
+      arr.forEach((str) => {
+        let [k, v] = str.split("=");
+        if (!k) return;
+        obj[k] = decodeURIComponent(v);
+      });
+      return obj;
+    }
+    var params = getParams()
+  </script>
+</head>
+
+<body>
+  <main>
+    <div id="msg_wrap">
+      <span id="msg" style="color: #666">...</span>
+    </div>
+    <pre>
+<code id="code"></code>
+</pre>
+  </main>
+  <script>
+    var $code = document.querySelector('#code')
+
+    function setMsg(msg) {
+      if (!msg) {
+        document.querySelector('#msg_wrap').style.display = 'none'
+      } else {
+        document.querySelector('#msg').innerText = msg
+      }
+    }
+
+    function getCode(url) {
+      fetch(url)
+        .then(res => {
+          return res.text()
+        })
+        .then(data => {
+          // $code.textContent = data
+          setMsg(null)
+          // hljs.highlightAll();
+          const worker = new Worker('worker-hljs.js');
+          worker.onmessage = (event) => {
+            code.innerHTML = event.data;
+          }
+          worker.postMessage(data); //code.textContent
+          // if($code.scrollWidth > $code.clientWidth) // can toggle class 'break_word'
+        })
+        .catch(error => {
+          setMsg(error.message)
+        })
+    }
+    if (!params.src) {
+      setMsg('Missing query.src')
+    } else {
+      setMsg(params.src)
+      getCode(params.src)
+    }
+  </script>
+</body>
+
+</html>

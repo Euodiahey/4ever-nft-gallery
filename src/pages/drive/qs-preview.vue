@@ -30,7 +30,10 @@
     </q-carousel-slide> -->
     <!-- <q-carousel-slide :name="1" img-src="https://cdn.quasar.dev/img/mountains.jpg" /> -->
     <q-carousel-slide v-for="(it, i) in list" :key="it.Key" :name="i">
-      <iframe class="wh100p" :src="getUrl(it)" frameborder="0"></iframe>
+      <iframe class="wh100p" :src="getUrl(it)" frameborder="0" @load="loading = false"></iframe>
+      <div class="pos-center" v-show="loading">
+        <icon-loading />
+      </div>
     </q-carousel-slide>
 
     <template v-slot:control>
@@ -65,6 +68,7 @@ export default {
     return {
       curIdx: this.current,
       fullscreen: false,
+      loading: true,
     }
   },
   computed: {
@@ -74,17 +78,26 @@ export default {
   },
   watch: {
     current(val) {
-      console.log(val, 'current')
       this.curIdx = val
+    },
+    curItem() {
+      console.log('loading')
+      this.loading = true
     },
   },
   methods: {
+    onLoad() {
+      console.log('iframe loaded')
+    },
     getUrl(it) {
       let pre = 'http://127.0.0.1:5174/'
-      // pre = 'https://vue-preview.4everland.app/'
+      pre = 'https://vue-preview.4everland.app/'
       let url = pre + '?src=' + it.url
       if (it.size > 1024 * 100) {
-        if (/\.(js|json|txt|html)$/.test(it.name)) url += '&type=download'
+        if (/\.(js|json|txt|html)$/.test(it.name)) {
+          url += '&type=download'
+          // url = 'http://127.0.0.1:5173/test.html?src=' + it.url
+        }
       }
       return url
     },

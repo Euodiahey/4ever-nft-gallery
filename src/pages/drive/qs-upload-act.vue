@@ -25,7 +25,7 @@ import UploadBtn from './qs-upload-btn.vue'
 
         <q-card-section>
           <div class="ta-c" v-show="isEmpty">
-            <upload-icon></upload-icon>
+            <icon-upload />
             <p class="mt-5">Drop or Paste files to upload</p>
           </div>
 
@@ -54,13 +54,13 @@ export default {
     return {
       files: [],
       showPop: false,
-      uploading: false
+      uploading: false,
     }
   },
   computed: {
     isEmpty() {
       return !this.files.length
-    }
+    },
   },
   methods: {
     onFiles(e) {
@@ -83,13 +83,13 @@ export default {
               cid,
               pid: pre,
               value: cid,
-              label: val
+              label: val,
             })
           }
           pre = cid
         }
       }
-    }
-  }
+    },
+  },
 }
 </script>
