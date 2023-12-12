@@ -219,7 +219,7 @@ export default {
           `https://api.opensea.io/v2/chain/${this.curTag.chain}/contract/${it.contract_address}/nfts/${it.id}`,
           {
             headers: {
-              'x-api-key': 'd00c0996737e43669e8dd0ff6e712b57'
+              'x-api-key': '20a48952eeee476b98d7fea3675e4142'
             }
           }
         )
